@@ -1,17 +1,20 @@
 const express = require("express");
 const { tokenize, resolve } = require("../services/jwt");
 const User = require("../modals/User");
+const auth = require("../services/auth");
+
+
 
 var router = express.Router();
 
 router.post("/login", function (req, res) {
-    var username = req.body.username;
-    var password = req.body.password;
+    let username = req.body.username;
+    let password = req.body.password;
     User.findOne({ username }, function (err, user) {
         console.log(user);
-        if (err) return res.status(300).send("Bad Request1");
+        if (err) return res.status(300).send("User Not Found!");
         user.isPasswordMatches(password, function (success) {
-            if (!success) return res.status(300).send("Bad Request 2");
+            if (!success) return res.status(300).send("Password is not correct");
             tokenize(user, function (err, token) {
                 res.send(token);
             });
@@ -23,9 +26,14 @@ router.post("/login", function (req, res) {
 
 });
 
+router.post("/resolve", auth, function (req, res) {
+    let token = req.body["token"];
+    resolve(token, function (error, result) {
+        if (error) {
 
-router.post("/resolve", function (req, res) {
-
+        }
+        res.send(result);
+    });
 });
 
 
