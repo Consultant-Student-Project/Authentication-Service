@@ -1,0 +1,21 @@
+const request = require("request");
+const chai = require("chai");
+const assert = chai.assert;
+
+describe("Mail service tests...", function () {
+
+    var sendMessage;
+    it("Mail service initialized correctly...", function (done) {
+        this.timeout(3000);
+        sendMessage = require("../../services/mail").sendMessage;
+        done();
+    });
+
+    it("Mail service sent mail properly...", function (done) {
+        const testEmail = "ahmetcanozcan7@gmail.com";
+        sendMessage("Test Message From", testEmail);
+        done();
+    });
+
+});
+
