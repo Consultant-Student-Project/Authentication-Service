@@ -11,7 +11,6 @@ router.post("/login", function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
     User.findOne({ username }, function (err, user) {
-        console.log(user);
         if (err) return res.status(300).send("User Not Found!");
         user.isPasswordMatches(password, function (success) {
             if (!success) return res.status(300).send("Password is not correct");
@@ -41,8 +40,29 @@ router.post("/signup", function (req, res) {
     new User({
         username: formData.username,
         password: formData.password,
+        email: formData.email,
+    }).save(function (err, user) {
+        if (err) {
+            res.status(300).send("Server error");
+        }
+        res.send("Ok!");
     });
+});
 
+router.post("/activate/:token", function (req, res) {
+    let token = req.params.token;
+    resolve(token, function (err, decoded) {
+        if (err || !decoded.isActivationToken) {
+            return res.status(500).send("Error occured when resolving a token")
+        }
+        let username = decoded.username;
+        User.updateOne({ username: username }, { isActive: true }, function (err, doc) {
+            if (err) {
+                return res.status(500).send("Bad request");
+            }
+            return res.send("Account Activated Correctly");
+        });
+    });
 
 });
 

@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const serverAuthKey = fs.readFileSync(path.join(__dirname, "..", "server2serverAuth.key"));
+const serverAuthKey = fs.readFileSync(path.join(__dirname, "..", "server2serverAuth.key")).toString();
 
 function auth(req, res, next) {
     var authKey = req.headers["x-server-auth-key"];
