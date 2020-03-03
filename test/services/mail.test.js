@@ -13,8 +13,13 @@ describe("Mail service tests...", function () {
 
     it("Mail service sent mail properly...", function (done) {
         const testEmail = "ahmetcanozcan7@gmail.com";
-        sendMessage("Test Message From", testEmail);
-        done();
+        sendMessage("Test Message", "Test Message From", testEmail, function (err, info) {
+            if (err) {
+                assert(true, "Error occured when sending email")
+                done(err);
+            }
+            done();
+        });
     });
 
 });
