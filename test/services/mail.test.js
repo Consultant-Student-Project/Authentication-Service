@@ -12,7 +12,7 @@ describe("Mail service tests...", function () {
     });
 
     it("Mail service sent mail properly...", function (done) {
-        const testEmail = "ahmetcanozcan7@gmail.com";
+        const testEmail = "consultantstudentproject@gmail.com";
         sendMessage("Test Message", "Test Message From", testEmail, function (err, info) {
             if (err) {
                 assert(true, "Error occured when sending email")

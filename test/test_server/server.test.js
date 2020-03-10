@@ -16,7 +16,9 @@ describe("General server tests...", function () {
         username: "testuser12",
         password: "testuser12",
         email: "testuser12@gmail.com",
-    }
+        firstname: "test",
+        lastname: "user",
+    };
     var address = "http://localhost:3000";
     var port = server.address().port;
     it("Delete if user exist", function (done) {
@@ -63,23 +65,6 @@ describe("General server tests...", function () {
 
     });
 
-    it("Resolving an auth token..", function (done) {
-        axios({
-            method: "post",
-            headers: {
-                "x-server-auth-key": serverAuthKey,
-            },
-            url: `${address}/resolve`,
-            data: {
-                token: authToken,
-            }
-        }).then(response => {
-            if (response.status != 200) {
-                done("Response code : " + response.status);
-            }
-            done();
-        }).catch(err => done(err));
 
-    });
 });
 

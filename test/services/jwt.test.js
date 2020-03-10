@@ -26,6 +26,7 @@ describe("JWT service tests...", function () {
         resolve(testToken, function (err, decoded) {
             if (err) {
                 assert(true, "Error occured on resolving....");
+                done(err);
             }
             testDecoded = decoded;
             done();

@@ -3,7 +3,7 @@ const { tokenize, resolve } = require("../services/jwt");
 const User = require("../modals/User");
 const auth = require("../middlewares/auth");
 const { validateSignUpForm } = require("../services/validation")
-
+const { sendAccountActivationMail } = require("../services/mail");
 
 var router = express.Router();
 
@@ -11,7 +11,7 @@ router.post("/login", function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
     User.findOne({ username }, function (err, user) {
-        if (err) return res.status(300).send("User Not Found!");
+        if (err || !user) return res.status(300).send("User Not Found!");
         user.isPasswordMatches(password, function (success) {
             if (!success) return res.status(300).send("Password is not correct");
             tokenize(user, function (err, token) {
@@ -23,11 +23,14 @@ router.post("/login", function (req, res) {
 
 router.post("/resolve", auth, function (req, res) {
     let token = req.body["token"];
+    console.log(token);
     resolve(token, function (error, result) {
         if (error) {
-
+            return setTimeout(function () {
+                return res.status(300).send(err);
+            }, 100);
         }
-        res.send(result);
+        return res.send(result);
     });
 });
 
@@ -41,11 +44,18 @@ router.post("/signup", function (req, res) {
         username: formData.username,
         password: formData.password,
         email: formData.email,
+        firstname: formData.firstname,
+        lastname: formData.lastname,
     }).save(function (err, user) {
         if (err) {
             res.status(300).send("Server error");
         }
-        res.send("Ok!");
+        sendAccountActivationMail(user, function (err, info) {
+            if (err) {
+                return res.status(300).send("Activision mail could not send");
+            }
+            res.send("Ok!");
+        });
     });
 });
 
@@ -60,6 +70,7 @@ router.post("/activate/:token", function (req, res) {
             if (err) {
                 return res.status(500).send("Bad request");
             }
+            console.log(`Account of ${username} is  Activated`);
             return res.send("Account Activated Correctly");
         });
     });
