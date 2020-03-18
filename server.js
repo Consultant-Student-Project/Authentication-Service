@@ -12,7 +12,7 @@ mongoose.connect("mongodb://localhost:27017/ConsultantStudentProject", { useNewU
 var db = mongoose.connection;
 db.once("open", function () {
     console.log("MongoDB connected correctly.")
-})
+});
 
 //Sets middlewares
 app.use(morgan("tiny"));
