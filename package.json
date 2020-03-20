@@ -4,9 +4,10 @@
   "description": "JWT Authentication Service for Consultant Student Project",
   "main": "server.js",
   "scripts": {
-    "test": "mocha test/**/*.test.js",
+    "test": "echo \" not implemented \" ",
     "start": "tsc && node dist/",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "dev": "ts-node src"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.3",
+    "@types/mongoose": "^5.7.6",
     "@types/node": "^13.9.2",
     "@types/nodemailer": "^6.4.0",
     "chai": "^4.2.0",

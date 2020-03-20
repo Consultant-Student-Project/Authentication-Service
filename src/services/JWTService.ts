@@ -8,7 +8,7 @@ class JWTService {
     private options: Object;
     constructor(options: Object = {}) {
         //Reading private key from root
-        this.privateKey = fs.readFileSync(path.join('..', '..', 'jwtPrivateKey.key')).toString();
+        this.privateKey = fs.readFileSync(path.join(__dirname, '..', '..', 'jwtPrivate.key')).toString();
         this.options = options;
     }
 

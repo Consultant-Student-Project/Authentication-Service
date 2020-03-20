@@ -1,6 +1,6 @@
 import { SignUpFormData } from '../interfaces/formTypes'
 
-class ValidationService {
+export default class ValidationService {
 
     public validate(formData: SignUpFormData): Boolean {
         return true;

@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
-const bcrypt = require('bcrypt');
-const SALT_WORK_FACTOR = 10;
+import * as mongoose from 'mongoose'
+import * as bcrypt from 'bcrypt'
+
+const SALT_WORK_FACTOR = 10
 
 
 const userSchema = new mongoose.Schema({
@@ -34,7 +35,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("save", function (next) {
-    var user = this;
+    var user: any = this;
 
     if (!user.isModified('password')) return next();
 
@@ -58,4 +59,4 @@ userSchema.methods.isPasswordMatches = function (passwd, callback) {
 
 var User = mongoose.model('User', userSchema);
 
-module.exports = User;
+export default User

@@ -10,7 +10,7 @@ export default class AuthMiddleware extends Middleware {
     constructor() {
         super();
         //Read private key from root
-        this.privateKey = fs.readFileSync(path.join('..', '..', 'server2serverAuth.key')).toString();
+        this.privateKey = fs.readFileSync(path.join(__dirname, '..', '..', 'server2serverAuth.key')).toString();
     }
     public instance = (req: express.Request, res: express.Response, next: express.NextFunction) => {
         //Get authentication token from request's header
