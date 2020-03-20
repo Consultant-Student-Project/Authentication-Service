@@ -2,4 +2,3 @@ node_modules/
 jwtPrivate.key
 server2serverAuth.key
 emailInfo.csv
-dist/
