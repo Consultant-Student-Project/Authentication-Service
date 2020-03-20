@@ -1,5 +1,5 @@
-import Middleware from '../interfaces/Middleware'
-import * as express from 'express'
+import Middleware from '../interfaces/Middleware';
+import * as express from 'express';
 
 
 export default class TimeoutMiddleware extends Middleware {

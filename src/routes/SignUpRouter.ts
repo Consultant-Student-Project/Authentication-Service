@@ -1,9 +1,9 @@
 import * as express from 'express';
-import Router from '../interfaces/Router'
+import Router from '../interfaces/Router';
 
-import { SignUpFormData } from '../interfaces/formTypes'
-import MailService from '../services/MailService'
-import ValidatorService from '../services/ValidationService'
+import { SignUpFormData } from '../interfaces/formTypes';
+import MailService from '../services/MailService';
+import ValidatorService from '../services/ValidationService';
 import User from '../modals/User';
 
 export default class SignUpRouter extends Router {
@@ -18,13 +18,13 @@ export default class SignUpRouter extends Router {
     }
 
     signupHandler = (req: express.Request, res: express.Response) => {
-        //Get form data
-        let formData: SignUpFormData = req.body;
-        //Check formdata is valid or not
+        // Get form data
+        const formData: SignUpFormData = req.body;
+        // Check formdata is valid or not
         if (!this.validator.validate(formData)) {
             return res.status(300).send('Bad Request');
         }
-        //Create an user.
+        // Create an user.
         new User(formData).save((err: Error, user: any) => {
             if (err) {
                 return res
@@ -32,11 +32,11 @@ export default class SignUpRouter extends Router {
                     .send('Error  : creating error on saving user');
             }
             process.nextTick(() => {
-                //Send activation mail
+                // Send activation mail
                 this.mailService.sendAccountActivationMail(user,
-                    (err: Error, info: any) => {
-                        if (err) {
-                            // TODO: log mail sending 
+                    (mailError: Error, info: any) => {
+                        if (mailError) {
+                            // TODO: log mail sending
                         }
                     }
                 );

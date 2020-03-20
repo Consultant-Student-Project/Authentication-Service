@@ -1,9 +1,9 @@
 import * as express from 'express';
-import Router from '../interfaces/Router'
-import AuthMiddleware from '../middleware/AuthMiddleware'
-import JWTService from '../services/JWTService'
+import Router from '../interfaces/Router';
+import AuthMiddleware from '../middleware/AuthMiddleware';
+import JWTService from '../services/JWTService';
 
-import { MiddlewareFunction } from '../interfaces/functionTypes'
+import { MiddlewareFunction } from '../interfaces/functionTypes';
 
 
 export default class ResolveRouter extends Router {
@@ -18,8 +18,8 @@ export default class ResolveRouter extends Router {
     }
 
     private resolveHandler = (req: express.Request, res: express.Response): any => {
-        let self = this;
-        let token = req.body.token;
+        const self = this;
+        const token = req.body.token;
 
         self.jwt.resolve(token, function (err: Error, result: any) {
             if (err) {

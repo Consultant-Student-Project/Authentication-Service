@@ -1,3 +1,3 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from 'express';
 
-export interface MiddlewareFunction { (req: Request, res: Response, next: NextFunction): any }
+export type MiddlewareFunction = (req: Request, res: Response, next: NextFunction) => any;

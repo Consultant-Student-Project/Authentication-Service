@@ -1,14 +1,14 @@
-import 'mocha'
-import { expect } from 'chai'
+import 'mocha';
+import { expect } from 'chai';
 
-import JWTService from '../../src/services/JWTService'
+import JWTService from '../../src/services/JWTService';
 
 describe('JSON Web Token test.',
     function () {
 
-        let jwt = new JWTService();
+        const jwt = new JWTService();
 
-        let exampleObject = {
+        const exampleObject = {
             username: 'Test',
             password: 'testpass'
         };
@@ -33,7 +33,7 @@ describe('JSON Web Token test.',
                 expect(result.username).to.be.equals(exampleObject.username);
                 done();
             });
-        })
+        });
 
 
 

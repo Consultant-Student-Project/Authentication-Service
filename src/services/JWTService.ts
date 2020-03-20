@@ -1,18 +1,18 @@
-import * as jwt from 'jsonwebtoken'
-import * as fs from 'fs'
-import * as path from 'path'
+import * as jwt from 'jsonwebtoken';
+import * as fs from 'fs';
+import * as path from 'path';
 
 
 class JWTService {
     private privateKey: string;
-    private options: Object;
-    constructor(options: Object = {}) {
-        //Reading private key from root
+    private options: object;
+    constructor(options: object = {}) {
+        // Reading private key from root
         this.privateKey = fs.readFileSync(path.join(__dirname, '..', '..', 'jwtPrivate.key')).toString();
         this.options = options;
     }
 
-    public tokenize(user: any, cb: (err: Error, result: any) => any, activationToken: Boolean = false) {
+    public tokenize(user: any, cb: (err: Error, result: any) => any, activationToken: boolean = false) {
         jwt.sign({ username: user.username, isActivationToken: activationToken }, this.privateKey, this.options, cb);
     }
 
@@ -22,4 +22,4 @@ class JWTService {
 
 }
 
-export default JWTService
+export default JWTService;

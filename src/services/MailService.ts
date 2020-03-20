@@ -1,9 +1,9 @@
-import * as path from 'path'
-import * as fs from 'fs'
+import * as path from 'path';
+import * as fs from 'fs';
 
-import * as nodemailer from 'nodemailer'
+import * as nodemailer from 'nodemailer';
 
-import JWTService from './JWTService'
+import JWTService from './JWTService';
 
 export default class MailService {
     private transporter: nodemailer.Transporter;
@@ -14,11 +14,11 @@ export default class MailService {
     constructor(service: string = 'gmail') {
         let res: string;
         res = fs.readFileSync(path.join(__dirname, '..', '..', 'emailinfo.csv')).toString();
-        let sarr = res.split(',');
+        const sarr = res.split(',');
         this.username = sarr[0];
         this.password = sarr[1];
         this.transporter = nodemailer.createTransport({
-            service: service,
+            service,
             auth: {
                 user: this.username,
                 pass: this.password,
@@ -38,7 +38,7 @@ export default class MailService {
                     this.transporter.sendMail({
                         from: user,
                         to: user.email,
-                        subject: "Account Activision.",
+                        subject: 'Account Activision.',
                         html: `Activate your account.
                             <a href="http://localhost:3000/activate/${token}" >
                          </a>`,
@@ -52,10 +52,10 @@ export default class MailService {
         cb: (err: Error, info: any) => void) => {
         this.transporter.sendMail({
             from: this.username,
-            to: to,
-            subject: "Test Message",
+            to,
+            subject: 'Test Message',
             text: message,
-        }, cb)
+        }, cb);
     }
 
 

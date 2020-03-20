@@ -1,7 +1,7 @@
-import * as mongoose from 'mongoose'
-import * as bcrypt from 'bcrypt'
+import * as mongoose from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
-const SALT_WORK_FACTOR = 10
+const SALT_WORK_FACTOR = 10;
 
 
 const userSchema = new mongoose.Schema({
@@ -34,14 +34,18 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-userSchema.pre("save", function (next) {
-    var user: any = this;
+userSchema.pre('save', function (next) {
+    const user: any = this;
 
-    if (!user.isModified('password')) return next();
+    if (!user.isModified('password')) {
+        return next();
+    }
 
     bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
-        if (err) return next(err);
-        bcrypt.hash(user.password, salt, function (err, hash) {
+        if (err) {
+            return next(err);
+        }
+        bcrypt.hash(user.password, salt, function (hashErr, hash) {
             user.password = hash;
             next();
         });
@@ -49,14 +53,16 @@ userSchema.pre("save", function (next) {
 });
 
 userSchema.methods.isPasswordMatches = function (passwd, callback) {
-    var user = this;
+    const user = this;
     bcrypt.compare(passwd, user.password, function (err, isMatch) {
-        if (err) return callback(false);
+        if (err) {
+            return callback(false);
+        }
         callback(isMatch);
-    })
-}
+    });
+};
 
 
-var User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
-export default User
+export default User;

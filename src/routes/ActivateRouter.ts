@@ -1,7 +1,7 @@
 import * as express from 'express';
-import Router from '../interfaces/Router'
-import JWTService from '../services/JWTService'
-import User from '../modals/User'
+import Router from '../interfaces/Router';
+import JWTService from '../services/JWTService';
+import User from '../modals/User';
 
 export default class ActivateRouter extends Router {
 
@@ -15,8 +15,8 @@ export default class ActivateRouter extends Router {
     }
 
     public activateHandler = (req: express.Request, res: express.Response): any => {
-        let token = req.body.token;
-        let self = this;
+        const token = req.body.token;
+        const self = this;
 
         self.jwt.resolve(token, (err: Error, result: any) => {
             if (err || !result.isActivationToken) {
@@ -24,8 +24,8 @@ export default class ActivateRouter extends Router {
                     .status(300)
                     .send('Token not resolved');
             }
-            User.updateOne({ username: result.username }, { isActive: true }, (err: Error, result: any) => {
-                if (err) {
+            User.updateOne({ username: result.username }, { isActive: true }, (updateErr: Error, user: any) => {
+                if (updateErr) {
                     return res
                         .status(300)
                         .send('User not found.');

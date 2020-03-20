@@ -6,7 +6,7 @@ const connectionURL =
     process.env.DB_CONNECT_URL
     || 'mongodb://localhost:27017/ConsultantStudentProject';
 
-let app = new App(+port);
+const app = new App(+port);
 
 app.connectDB(connectionURL,
     { useNewUrlParser: true, useUnifiedTopology: true }

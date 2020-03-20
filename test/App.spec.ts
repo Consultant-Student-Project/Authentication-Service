@@ -1,16 +1,16 @@
-import App from '../src/App'
-import { expect } from 'chai'
-import User from '../src/modals/User'
+import App from '../src/App';
+import { expect } from 'chai';
+import User from '../src/modals/User';
 import JWTService from '../src/services/JWTService';
 import * as baseAxios from 'axios';
-import 'mocha'
+import 'mocha';
 
 const axios = baseAxios.default;
 
 describe('General App Test.',
     function () {
 
-        let jwt = new JWTService();
+        const jwt = new JWTService();
 
         this.timeout(3000);
 
@@ -21,13 +21,13 @@ describe('General App Test.',
             firstname: 'test',
             lastname: 'user',
         };
-        var address = 'http://localhost:3000';
-        var app: App;
+        const address = 'http://localhost:3000';
+        let app: App;
         it('Invoke express application.',
             (done: MochaDone) => {
-                let port = 3000;
+                const port = 3000;
                 app = new App(+port);
-                let databaseConnectionURL = 'mongodb://localhost:27017/ConsultantStudentProject';
+                const databaseConnectionURL = 'mongodb://localhost:27017/ConsultantStudentProject';
                 app.connectDB(databaseConnectionURL, {}, () => {
                     app.start();
                     done();
@@ -51,15 +51,15 @@ describe('General App Test.',
         it('Activating a user..', function (done) {
             jwt.tokenize(testUserInfo, function (err, token) {
 
-                axios.post(`${address}/activate/`, { token: token })
+                axios.post(`${address}/activate/`, { token })
                     .then(response => {
                         expect(response.status).to.equals(200);
                         done();
-                    }).catch(err => done(err));
+                    }).catch(requestError => done(requestError));
 
             }, true);
         });
-        var authToken = '';
+
         it('Sending login request...', function (done) {
             axios.post(`${address}/login`, {
                 username: testUserInfo.username,

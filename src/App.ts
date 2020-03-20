@@ -4,12 +4,12 @@ import * as mongoose from 'mongoose';
 import * as morgan from 'morgan';
 import * as helmet from 'helmet';
 import * as bodyParser from 'body-parser';
-import TimeoutMiddleware from './middleware/TimeoutMiddleware'
+import TimeoutMiddleware from './middleware/TimeoutMiddleware';
 import routes from './routes';
 
 class App {
 
-    public express: express.Application
+    public express: express.Application;
     public server: http.Server;
     public port: number;
 
