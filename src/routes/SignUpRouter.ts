@@ -37,7 +37,10 @@ export default class SignUpRouter extends Router {
                     (mailError: Error, info: any) => {
                         if (mailError) {
                             // TODO: log mail sending
+                            return;
                         }
+                        console.log('mail sent');
+
                     }
                 );
             });

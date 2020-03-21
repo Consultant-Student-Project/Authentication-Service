@@ -2,6 +2,7 @@ import App from '../src/App';
 import { expect } from 'chai';
 import User from '../src/modals/User';
 import JWTService from '../src/services/JWTService';
+import testUserInfo from './testUser';
 import * as baseAxios from 'axios';
 import 'mocha';
 
@@ -14,13 +15,6 @@ describe('General App Test.',
 
         this.timeout(3000);
 
-        const testUserInfo = {
-            username: 'testuser12',
-            password: 'testuser12',
-            email: 'testuser12@gmail.com',
-            firstname: 'test',
-            lastname: 'user',
-        };
         const address = 'http://localhost:3000';
         let app: App;
         it('Invoke express application.',
