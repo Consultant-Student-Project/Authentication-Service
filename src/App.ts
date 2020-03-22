@@ -13,7 +13,10 @@ class App {
     public server: http.Server;
     public port: number;
 
+    private dbConnectionAttempts: number;
+
     constructor(port: number) {
+        this.dbConnectionAttempts = 0;
         this.express = express();
         this.port = port;
         this.setMiddlewares();
@@ -29,9 +32,21 @@ class App {
     }
 
     public connectDB(connectionURL: string, options: any = null, cb: () => void) {
+        this.dbConnectionAttempts++;
         mongoose.connect(connectionURL, options, (err: mongoose.Error) => {
             if (err) {
-                return console.error('Error occured when connecting to db ');
+                console.error('Error occured when connecting to db.:+' + err +
+                    '\n' +
+                    'trying again to connect... ');
+                if (this.dbConnectionAttempts < 3) {
+                    setTimeout(() => {
+                        this.connectDB(connectionURL, options, cb);
+                    }, 1500);
+                } else {
+                    console.error(`Try to connect db ${this.dbConnectionAttempts} times..
+                    But connection doesn't established. exiting...`);
+                }
+                return;
             }
             console.log('Database connection established.');
             return cb();

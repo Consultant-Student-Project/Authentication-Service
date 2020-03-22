@@ -1,6 +1,3 @@
-import * as path from 'path';
-import * as fs from 'fs';
-
 import * as nodemailer from 'nodemailer';
 
 import JWTService from './JWTService';
@@ -12,11 +9,11 @@ export default class MailService {
     private password: string;
 
     constructor(service: string = 'gmail') {
-        let res: string;
-        res = fs.readFileSync(path.join(__dirname, '..', '..', 'emailinfo.csv')).toString();
-        const sarr = res.split(',');
-        this.username = sarr[0];
-        this.password = sarr[1];
+        this.username = process.env.MAIL_USERNAME;
+        this.password = process.env.MAIL_PASSWORD;
+        if (!this.username || !this.password) {
+            console.error('MAIL DATA ERROR:', this.username, this.password);
+        }
         this.transporter = nodemailer.createTransport({
             service,
             auth: {

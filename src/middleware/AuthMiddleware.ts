@@ -1,7 +1,6 @@
 import Middleware from '../interfaces/Middleware';
 import * as express from 'express';
-import * as fs from 'fs';
-import * as path from 'path';
+
 
 export default class AuthMiddleware extends Middleware {
 
@@ -10,7 +9,7 @@ export default class AuthMiddleware extends Middleware {
     constructor() {
         super();
         // Read private key from root
-        this.privateKey = fs.readFileSync(path.join(__dirname, '..', '..', 'server2serverAuth.key')).toString();
+        this.privateKey = process.env.SERVER_AUTH_KEY || 'default_key';
     }
     public instance = (req: express.Request, res: express.Response, next: express.NextFunction) => {
         // Get authentication token from request's header

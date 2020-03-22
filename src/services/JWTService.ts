@@ -1,14 +1,10 @@
 import * as jwt from 'jsonwebtoken';
-import * as fs from 'fs';
-import * as path from 'path';
-
 
 class JWTService {
     private privateKey: string;
     private options: object;
     constructor(options: object = {}) {
-        // Reading private key from root
-        this.privateKey = fs.readFileSync(path.join(__dirname, '..', '..', 'jwtPrivate.key')).toString();
+        this.privateKey = process.env.JWT_PRIVATE_KEY || 'default_jwt_private_key';
         this.options = options;
     }
 
