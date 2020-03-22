@@ -21,7 +21,7 @@ export default class SignUpRouter extends Router {
         // Get form data
         const formData: SignUpFormData = req.body;
         // Check formdata is valid or not
-        if (!this.validator.validate(formData)) {
+        if (!this.validator.validateFormData(formData)) {
             return res.status(300).send('Bad Request');
         }
         // Create an user.
