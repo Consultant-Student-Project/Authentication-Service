@@ -24,7 +24,7 @@ export default class ApproveRouter extends Router {
           .status(300)
           .send('Token not resolved');
       }
-      User.updateOne({ username: result.username }, { autherization: 1 }, (updateErr: Error, user: any) => {
+      User.updateOne({ username: result.username }, { authorization: 1 }, (updateErr: Error, user: any) => {
         if (updateErr) {
           return res
             .status(300)
