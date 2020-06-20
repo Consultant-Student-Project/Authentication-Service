@@ -15,16 +15,24 @@ export default class ApproveRouter extends Router {
   }
 
   public handler = (req: express.Request, res: express.Response): any => {
-    const token = req.body.token;
+    const token = req.header('X-Auth-Token');
+    const username = req.body.username;
     const self = this;
-
     self.jwt.resolve(token, (err: Error, result: any) => {
-      if (err || !result.isActivationToken) {
+      if (err) {
+        console.log('Err', err);
         return res
           .status(300)
           .send('Token not resolved');
       }
-      User.updateOne({ username: result.username }, { authorization: 1 }, (updateErr: Error, user: any) => {
+      // if user is not autherized to approve
+      console.log(result.auhorization);
+      if (result.auhorization < 3) {
+        return res
+          .status(300)
+          .send('Autherization error');
+      }
+      User.updateOne({ username, }, { authorization: 2 }, (updateErr: Error, user: any) => {
         if (updateErr) {
           return res
             .status(300)

@@ -9,7 +9,13 @@ class JWTService {
     }
 
     public tokenize(user: any, cb: (err: Error, result: any) => any, activationToken: boolean = false) {
-        jwt.sign({ username: user.username, isActivationToken: activationToken }, this.privateKey, this.options, cb);
+        jwt.sign({
+            username: user.username,
+            authorization: user.authorization,
+            isActivationToken: activationToken
+        },
+            this.privateKey,
+            this.options, cb);
     }
 
     public resolve(token: string, cb: (err: Error, result: any) => any) {
