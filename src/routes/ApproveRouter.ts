@@ -40,7 +40,19 @@ export default class ApproveRouter extends Router {
             .send('User not found.');
         }
 
-        approve.approveApplication(appID);
+        approve.approveApplication(appID).then(response => {
+          if (!response) {
+            return console.log('err res is null');
+          }
+          User.findOne({ username })
+            .then((doc: any) => {
+              doc.faculty = response.faculty;
+              doc.department = response.department;
+              doc.save()
+                .then(val => console.log('Document Updated'))
+                .catch(console.error);
+            });
+        });
         return res.send('Ok!');
       });
     });

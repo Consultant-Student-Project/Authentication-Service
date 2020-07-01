@@ -35,6 +35,14 @@ const userSchema = new mongoose.Schema({
     authorization: {
         type: Number,
         default: 0
+    },
+    faculty: {
+        type: String,
+        default: 'n/a'
+    },
+    department: {
+        type: String,
+        default: 'n/a'
     }
 });
 
