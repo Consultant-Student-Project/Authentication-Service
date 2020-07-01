@@ -6,6 +6,7 @@ import ActivateRouter from './ActivateRouter';
 import ApproveRouter from './ApproveRouter';
 
 import * as express from 'express';
+import AuthMiddleware from 'middleware/AuthMiddleware';
 
 const router = express.Router();
 

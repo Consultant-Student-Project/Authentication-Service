@@ -2,7 +2,7 @@ import * as express from 'express';
 import Router from '../interfaces/Router';
 import JWTService from '../services/JWTService';
 import User from '../modals/User';
-
+import approve from '../adapter/approve';
 export default class ApproveRouter extends Router {
 
   private jwt: JWTService;
@@ -17,6 +17,7 @@ export default class ApproveRouter extends Router {
   public handler = (req: express.Request, res: express.Response): any => {
     const token = req.header('X-Auth-Token');
     const username = req.body.username;
+    const appID = req.body.appID;
     const self = this;
     self.jwt.resolve(token, (err: Error, result: any) => {
       if (err) {
@@ -38,6 +39,8 @@ export default class ApproveRouter extends Router {
             .status(300)
             .send('User not found.');
         }
+
+        approve.approveApplication(appID);
         return res.send('Ok!');
       });
     });
