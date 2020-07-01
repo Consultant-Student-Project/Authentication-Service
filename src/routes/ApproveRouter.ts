@@ -33,26 +33,14 @@ export default class ApproveRouter extends Router {
           .status(300)
           .send('Autherization error');
       }
-      User.updateOne({ username, }, { authorization: 2 }, (updateErr: Error, user: any) => {
+      User.updateOne({ username, }, { authorization: 2, faculty: req.body.faculty, department: req.body.department }, (updateErr: Error, user: any) => {
         if (updateErr) {
           return res
             .status(300)
             .send('User not found.');
         }
 
-        approve.approveApplication(appID).then(response => {
-          if (!response) {
-            return console.log('err res is null');
-          }
-          User.findOne({ username })
-            .then((doc: any) => {
-              doc.faculty = response.faculty;
-              doc.department = response.department;
-              doc.save()
-                .then(val => console.log('Document Updated'))
-                .catch(console.error);
-            });
-        });
+        approve.approveApplication(appID);
         return res.send('Ok!');
       });
     });
